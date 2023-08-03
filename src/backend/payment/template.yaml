@@ -185,21 +185,21 @@ Resources:
     Properties:
       Name: !Sub "/${Stage}/service/payment/api/capture/url"
       Type: String
-      Value: !Sub ${StripePaymentApplication.Outputs.CaptureApiUrl}
-
+      Value: !Sub '${PaymentApi}.execute-api.${AWS::Region}.amazonaws.com/prod/capture'
+      
   PaymentChargeEndpointParameter:
     Type: AWS::SSM::Parameter
     Properties:
       Name: !Sub "/${Stage}/service/payment/api/charge/url"
       Type: String
-      Value: !Sub ${StripePaymentApplication.Outputs.ChargeApiUrl}
+      Value: !Sub '${PaymentApi}.execute-api.${AWS::Region}.amazonaws.com/prod/charge'
 
   PaymentRefundEndpointParameter:
     Type: AWS::SSM::Parameter
     Properties:
       Name: !Sub "/${Stage}/service/payment/api/refund/url"
       Type: String
-      Value: !Sub ${StripePaymentApplication.Outputs.RefundApiUrl}
+      Value: !Sub '${PaymentApi}.execute-api.${AWS::Region}.amazonaws.com/prod/refund'
 
 Outputs:
   CollectPaymentFunction:
