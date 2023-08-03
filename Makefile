@@ -24,16 +24,21 @@ deploy: ##=> Deploy services
 	$(MAKE) deploy.payment
 	$(MAKE) deploy.booking
 	$(MAKE) deploy.loyalty
+	$(MAKE) deploy.catalog
 ## Enable the deploy.perftest if you need to deploy the performance test stack
 #	$(MAKE) deploy.perftest 
 
 delete: ##=> Delete services
+	$(MAKE) delete.catalog
 	$(MAKE) delete.booking
 	$(MAKE) delete.payment
 	$(MAKE) delete.loyalty
 	$(MAKE) delete.shared-lambda-layers
 ## Enable the delete.perftest if you need to delete the performance test stack
 #	$(MAKE) delete.perftest
+
+delete.catalog: ##=> Delete catalog service
+	$(MAKE) -C src/backend/catalog delete
 
 delete.booking: ##=> Delete booking service
 	$(MAKE) -C src/backend/booking delete
@@ -49,6 +54,9 @@ delete.perftest:
 
 delete.shared-lambda-layers: ##=> Delete shared Lambda layers stack
 	$(MAKE) -C src/backend/shared/libs delete
+
+deploy.catalog: ##=> Deploy catalog service using SAM
+	$(MAKE) -C src/backend/catalog deploy
 
 deploy.booking: ##=> Deploy booking service using SAM
 	$(MAKE) -C src/backend/booking deploy
