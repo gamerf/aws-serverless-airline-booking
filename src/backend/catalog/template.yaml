@@ -7,15 +7,15 @@ Parameters:
     Description: Environment stage or git branch
 
   FlightTable:
-    Type: String
-    Description: Flight Table
+      Type: AWS::SSM::Parameter::Value<String>
+      Description: Parameter Name for Flight Table
 
 Resources:
   ReserveFlight:
     Type: AWS::Serverless::Function
     Properties:
       Handler: reserve.lambda_handler
-      Runtime: python3.7
+      Runtime: python3.10
       CodeUri: src/reserve-flight
       Timeout: 10
       Environment:
@@ -26,7 +26,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: release.lambda_handler
-      Runtime: python3.7
+      Runtime: python3.10
       CodeUri: src/release-flight
       Timeout: 10
       Environment:
