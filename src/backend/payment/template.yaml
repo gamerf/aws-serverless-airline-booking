@@ -27,15 +27,84 @@ Globals:
         LOG_LEVEL: INFO
 
 Resources:
-  StripePaymentApplication:
-    Type: AWS::Serverless::Application
+#  StripePaymentApplication:
+#    Type: AWS::Serverless::Application
+#    Properties:
+#      Location:
+#        ApplicationId: arn:aws:serverlessrepo:us-east-1:375983427419:applications/api-lambda-stripe-charge
+#        SemanticVersion: 4.4.2
+#      Parameters:
+#        EnableInstantCapture: "false"
+#        SSMParameterPath: !Sub ${Stage}/service/payment/stripe/secretKey
+
+  PaymentApi:
+    Type: AWS::Serverless::Api
     Properties:
-      Location:
-        ApplicationId: arn:aws:serverlessrepo:us-east-1:375983427419:applications/api-lambda-stripe-charge
-        SemanticVersion: 4.4.2
-      Parameters:
-        EnableInstantCapture: "false"
-        SSMParameterPath: !Sub ${Stage}/service/payment/stripe/secretKey
+      StageName: prod
+      MethodSettings:
+        - ResourcePath: /charge
+          HttpMethod: post
+        - ResourcePath: /capture
+          HttpMethod: post
+        - ResourcePath: /refund
+          HttpMethod: post
+
+  PaymentCharge:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ServerlessAirline-PaymentCharge-${Stage}
+      Handler: charge.lambda_handler
+      Runtime: python3.10
+      CodeUri: src/payment-charge
+      Environment:
+        Variables:
+          STAGE: !Ref Stage
+      Events:
+        ApiEvent:
+            Type: Api
+            Properties:
+              Path: /charge
+              Method: post
+              RestApiId:
+                Ref: PaymentApi
+
+  PaymentCapture:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ServerlessAirline-PaymentCapture-${Stage}
+      Handler: capture.lambda_handler
+      Runtime: python3.10
+      CodeUri: src/payment-capture
+      Environment:
+        Variables:
+          STAGE: !Ref Stage
+      Events:
+        ApiEvent:
+            Type: Api
+            Properties:
+              Path: /capture
+              Method: post
+              RestApiId:
+                Ref: PaymentApi
+
+  PaymentRefund:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ServerlessAirline-PaymentRefund-${Stage}
+      Handler: capture.lambda_handler
+      Runtime: python3.10
+      CodeUri: src/payment-refund
+      Environment:
+        Variables:
+          STAGE: !Ref Stage
+      Events:
+        ApiEvent:
+            Type: Api
+            Properties:
+              Path: /refund
+              Method: post
+              RestApiId:
+                Ref: PaymentApi
 
   CollectPayment:
     Type: AWS::Serverless::Function
@@ -48,7 +117,7 @@ Resources:
         - !Ref SharedLibsLayer
       Environment:
         Variables:
-          PAYMENT_API_URL: !GetAtt StripePaymentApplication.Outputs.CaptureApiUrl
+          PAYMENT_API_URL: !Sub '${PaymentApi}.execute-api.${AWS::Region}.amazonaws.com/prod/capture'
           STAGE: !Ref Stage
 
   RefundPayment:
@@ -62,8 +131,26 @@ Resources:
         - !Ref SharedLibsLayer
       Environment:
         Variables:
-          PAYMENT_API_URL: !GetAtt StripePaymentApplication.Outputs.RefundApiUrl
+          PAYMENT_API_URL: !Sub '${PaymentApi}.execute-api.${AWS::Region}.amazonaws.com/prod/refund'
           STAGE: !Ref Stage
+
+  PaymentChargeLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${PaymentCharge}"
+      RetentionInDays: !Ref LogRetentionInDays
+
+  PaymentCaptureLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${PaymentCapture}"
+      RetentionInDays: !Ref LogRetentionInDays
+
+  PaymentRefundLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${PaymentRefund}"
+      RetentionInDays: !Ref LogRetentionInDays
 
   RefundPaymentLogGroup:
     Type: AWS::Logs::LogGroup
@@ -124,13 +211,13 @@ Outputs:
     Description: Refund Payment Lambda Function
 
   PaymentCaptureUrl:
-    Value: !Sub ${StripePaymentApplication.Outputs.CaptureApiUrl}
+    Value: !Sub '${PaymentApi}.execute-api.${AWS::Region}.amazonaws.com/prod/capture'
     Description: Payment Endpoint for capturing payments
 
   PaymentChargeUrl:
-    Value: !Sub ${StripePaymentApplication.Outputs.ChargeApiUrl}
+    Value: !Sub '${PaymentApi}.execute-api.${AWS::Region}.amazonaws.com/prod/charge'
     Description: Payment Endpoint for collecting payments
 
   RefundApiUrl:
-    Value: !Sub ${StripePaymentApplication.Outputs.RefundApiUrl}
+    Value: !Sub '${PaymentApi}.execute-api.${AWS::Region}.amazonaws.com/prod/refund'
     Description: Payment Endpoint for refunding payments
