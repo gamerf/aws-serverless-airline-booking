@@ -21,6 +21,7 @@ deploy: ##=> Deploy payment service using SAM
 		--template-file packaged.yaml \
 		--stack-name $${STACK_NAME}-catalog-$${AWS_BRANCH} \
 		--capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND \
+		--no-fail-on-empty-changeset \
 		--parameter-overrides \
 			Stage=$${AWS_BRANCH} \
 			FlightTable=/$${AWS_BRANCH}/service/amplify/storage/table/flight

@@ -62,6 +62,7 @@ deploy: ##=> Deploy booking service using SAM
 		--template-file packaged.yaml \
 		--stack-name $${STACK_NAME}-booking-$${AWS_BRANCH} \
 		--capabilities CAPABILITY_IAM \
+		--no-fail-on-empty-changeset \
 		--parameter-overrides \
 			BookingTable=/$${AWS_BRANCH}/service/amplify/storage/table/booking \
 			FlightTable=/$${AWS_BRANCH}/service/amplify/storage/table/flight \
