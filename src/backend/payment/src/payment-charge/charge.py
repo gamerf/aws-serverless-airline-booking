@@ -16,7 +16,12 @@ def lambda_handler(event, context):
     chargeId = "ch_"+stripeToken.split('_')[1]
 
     json_data = {
-        "chargeId": chargeId
+        "id": chargeId,
+        "object": "charge",
+        "amount": body['amount'],
+        "amount_captured": 0,
+        "amount_refunded": 0,
+        "currency": body['currency']
     }
 
     return {
@@ -25,5 +30,5 @@ def lambda_handler(event, context):
             "Access-Control-Allow-Origin": '*',
             "Access-Control-Allow-Methods": '*'
             },
-        'body': json_data    
+        'body': json.dumps(json_data)
     }
