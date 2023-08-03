@@ -10,8 +10,20 @@ metrics = Metrics()
 def lambda_handler(event, context):
     logger.info(event)
 
+    body = json.loads(event['body'])
+
+    stripeToken = body['stripeToken']
+    chargeId = "ch_"+stripeToken.split('_')[1]
+
+    json_data = {
+        "chargeId": chargeId
+    }
+
     return {
         'statusCode': 200,
-        'body': json.dumps('Payment charge processed!')
-    
+        'headers': {
+            "Access-Control-Allow-Origin": '*',
+            "Access-Control-Allow-Methods": '*'
+            },
+        'body': json_data    
     }
