@@ -41,6 +41,10 @@ Resources:
     Type: AWS::Serverless::Api
     Properties:
       StageName: prod
+      Cors:
+        AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+        AllowMethods: "'*'"
+        AllowOrigin: "'*'"
       MethodSettings:
         - ResourcePath: /charge
           HttpMethod: post
@@ -123,7 +127,7 @@ Resources:
         - !Ref SharedLibsLayer
       Environment:
         Variables:
-          PAYMENT_API_URL: !Sub '${PaymentApi}.execute-api.${AWS::Region}.amazonaws.com/prod/capture'
+          PAYMENT_API_URL: !Sub 'https://${PaymentApi}.execute-api.${AWS::Region}.amazonaws.com/prod/capture'
           STAGE: !Ref Stage
 
   RefundPayment:
@@ -137,7 +141,7 @@ Resources:
         - !Ref SharedLibsLayer
       Environment:
         Variables:
-          PAYMENT_API_URL: !Sub '${PaymentApi}.execute-api.${AWS::Region}.amazonaws.com/prod/refund'
+          PAYMENT_API_URL: !Sub 'https://${PaymentApi}.execute-api.${AWS::Region}.amazonaws.com/prod/refund'
           STAGE: !Ref Stage
 
   PaymentChargeLogGroup:
@@ -191,21 +195,21 @@ Resources:
     Properties:
       Name: !Sub "/${Stage}/service/payment/api/capture/url"
       Type: String
-      Value: !Sub '${PaymentApi}.execute-api.${AWS::Region}.amazonaws.com/prod/capture'
+      Value: !Sub 'https://${PaymentApi}.execute-api.${AWS::Region}.amazonaws.com/prod/capture'
 
   PaymentChargeEndpointParameter:
     Type: AWS::SSM::Parameter
     Properties:
       Name: !Sub "/${Stage}/service/payment/api/charge/url"
       Type: String
-      Value: !Sub '${PaymentApi}.execute-api.${AWS::Region}.amazonaws.com/prod/charge'
+      Value: !Sub 'https://${PaymentApi}.execute-api.${AWS::Region}.amazonaws.com/prod/charge'
 
   PaymentRefundEndpointParameter:
     Type: AWS::SSM::Parameter
     Properties:
       Name: !Sub "/${Stage}/service/payment/api/refund/url"
       Type: String
-      Value: !Sub '${PaymentApi}.execute-api.${AWS::Region}.amazonaws.com/prod/refund'
+      Value: !Sub 'https://${PaymentApi}.execute-api.${AWS::Region}.amazonaws.com/prod/refund'
 
 Outputs:
   CollectPaymentFunction:
@@ -217,13 +221,13 @@ Outputs:
     Description: Refund Payment Lambda Function
 
   PaymentCaptureUrl:
-    Value: !Sub '${PaymentApi}.execute-api.${AWS::Region}.amazonaws.com/prod/capture'
+    Value: !Sub 'https://${PaymentApi}.execute-api.${AWS::Region}.amazonaws.com/prod/capture'
     Description: Payment Endpoint for capturing payments
 
   PaymentChargeUrl:
-    Value: !Sub '${PaymentApi}.execute-api.${AWS::Region}.amazonaws.com/prod/charge'
+    Value: !Sub 'https://${PaymentApi}.execute-api.${AWS::Region}.amazonaws.com/prod/charge'
     Description: Payment Endpoint for collecting payments
 
   RefundApiUrl:
-    Value: !Sub '${PaymentApi}.execute-api.${AWS::Region}.amazonaws.com/prod/refund'
+    Value: !Sub 'https://${PaymentApi}.execute-api.${AWS::Region}.amazonaws.com/prod/refund'
     Description: Payment Endpoint for refunding payments
