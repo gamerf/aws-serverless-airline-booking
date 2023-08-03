@@ -81,7 +81,7 @@ _install_os_packages:
 	$(info [*] Installing jq...)
 	yum install jq -y
 	$(info [*] Upgrading Python SAM CLI and CloudFormation linter to the latest version...)
-	python3 -m pip install --upgrade --user cfn-lint aws-sam-cli
+	python3 -m pip install --upgrade --user cfn-lint==0.78.1 aws-sam-translator==1.71.0 aws-sam-cli urllib==1.26.16
 	npm -g install aws-cdk
 
 define HELP_MESSAGE
