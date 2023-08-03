@@ -24,12 +24,12 @@ deploy: ##=> Deploy services
 	$(MAKE) deploy.payment
 	$(MAKE) deploy.booking
 	$(MAKE) deploy.loyalty
-	$(MAKE) deploy.catalog
+#	$(MAKE) deploy.catalog
 ## Enable the deploy.perftest if you need to deploy the performance test stack
 #	$(MAKE) deploy.perftest 
 
 delete: ##=> Delete services
-	$(MAKE) delete.catalog
+#	$(MAKE) delete.catalog
 	$(MAKE) delete.booking
 	$(MAKE) delete.payment
 	$(MAKE) delete.loyalty
