@@ -73,7 +73,7 @@ input CreateBookingInput {
 # and loyalty owner is resolved at the resolver level using auth claims
 # to unlock admin use case, `customer/owner` field could be added
 # NOTE: API key is used for e2e test from Loyalty backend only
-type Loyalty @aws_api_key {
+type Loyalty {
     points: Int
     level: String
     remainingPoints: Int
@@ -84,5 +84,5 @@ type Mutation {
 }
 
 type Query {
-    getLoyalty(customer: String): Loyalty @aws_api_key
+    getLoyalty(customer: String): Loyalty
 }
