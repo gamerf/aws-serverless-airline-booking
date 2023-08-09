@@ -49,7 +49,6 @@ export async function processPayment({
   console.log(chargeData)
   try {
     const data = await axios.post(paymentEndpoint, chargeData)
-    console.log(data)
     const {
       data: {
         createdCharge: { id: chargeId }
