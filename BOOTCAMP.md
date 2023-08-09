@@ -1,11 +1,13 @@
 ## AWS Account
 
 * **Region**: eu-west-1
-* **AWS Console Link**: https://812432071470.signin.aws.amazon.com/console
+* **AWS Console Link**: https://gamerf-ct.awsapps.com/start
 * **IAM Users**
     - BookingServiceUser1-5
     - LoyaltyServiceUser1-5
     - PaymentServiceUser1-5
+
+---
 
 ## Checkpoints
 
@@ -14,21 +16,22 @@ This is a guideline for groups to understand where they should be at around this
 ### Day 1
 
 * **Morning**
-    - [x] Architectures, and agreement on integration patterns
-    - [x] Everyone able to access their team's Cloud9 environment
+    - [ ] Architectures, and agreement on integration patterns
+    - [ ] Everyone able to access their team's Cloud9 environment
 * **Afternoon**
-    - [x] Service partially implemented - one user story being testable via the front-end or API directly
+    - [ ] Service partially implemented - one user story being testable via the front-end or API directly
 
 ### Day 2
 
 * **Morning**
-    - [x] Majority of teams having their service as MVP
-    - [x] At least one team pushing changes through a pipeline
-    - [x] Presenters to sit down for at least 30m to help those who might be late
+    - [ ] Majority of teams having their service as MVP
+    - [ ] Pushing changes through a pipeline
+    - [ ] At least Tracing being enabled
 * **Afternoon**
-    - [x] At least Tracing being enabled
-    - [x] Majority or all services integrated with the front-end
+    - [ ] Majority or all services integrated with the front-end
+    - [ ] Teams presentations
 
+---
 
 ## Services
 
@@ -91,38 +94,6 @@ This is a guideline for groups to understand where they should be at around this
 {
     "bookingId": "booking-unique-id"
 }
-```
-
----
-
-### Catalog service
-
-* "As a customer, I want to get a list of flights for a destination" 
-* "As a customer, I want to fetch a flight by its unique ID"
-
-#### Front-end contract
-
-**Flight data format expected by front-end**
-
-```json
-[
-    {
-        "id": "173ec46b-0e12-45fe-9ba1-511abde3d318",
-        "departureDate": "2019-01-16T08:00+0000",
-        "departureAirportCode": "LGW",
-        "departureAirportName": "London Gatwick",
-        "departureCity": "London",
-        "departureLocale": "Europe/London",
-        "arrivalDate": "2019-01-16T10:15+0000",
-        "arrivalAirportCode": "MAD",
-        "arrivalAirportName": "Madrid Barajas",
-        "arrivalCity": "Madrid",
-        "arrivalLocale": "Europe/Madrid",
-        "ticketPrice": 400,
-        "ticketCurrency": "EUR",
-        "flightNumber": 1812
-    }
-]
 ```
 
 ---
