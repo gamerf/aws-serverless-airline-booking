@@ -51,14 +51,15 @@ export async function processPayment({
       data: {
         createdCharge: { id: chargeId }
       }
-    } = await axios.put(window.Config.PAYMENT_PREAUTH,
+    } = await axios.put(
+      window.Config.PAYMENT_PREAUTH,
       {
-        data: chargeData,
+        data: chargeData
       },
       {
         headers: {
-        Authorization: idToken,
-        'Content-Type': 'application/json'
+          Authorization: idToken,
+          'Content-Type': 'application/json'
         }
       }
     )

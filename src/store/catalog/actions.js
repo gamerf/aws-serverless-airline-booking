@@ -181,15 +181,18 @@ export async function fetchByFlightId({ commit, rootGetters }, { flightId }) {
     // })
 
     // [Mock-Example]
-    const { data: flightData } = await axios.get(window.Config.CATALOG_FETCH + `/flights/${flight.id}`, {
-    //  params: {
-    //    id: flight.id
-    //  },
-      headers: {
-        Authorization: credentials.idToken,
-        'Content-Type': 'application/json'
+    const { data: flightData } = await axios.get(
+      window.Config.CATALOG_FETCH + `/flights/${flight.id}`,
+      {
+        //  params: {
+        //    id: flight.id
+        //  },
+        headers: {
+          Authorization: credentials.idToken,
+          'Content-Type': 'application/json'
+        }
       }
-    })
+    )
 
     console.info('Flight received from Catalog...')
     console.log(flightData)

@@ -17,8 +17,8 @@ window.Config = {
   BOOKING_CREATE: 'https://endpckl3zl877.x.pipedream.net/',
 
   //Stripe public key
-  STRIPE_KEY: "pk_test_",
+  STRIPE_KEY: 'pk_test_',
 
   //Stripe secret key
-  STRIPE_SECRET_KEY: "sk_test_"
+  STRIPE_SECRET_KEY: 'sk_test_'
 }

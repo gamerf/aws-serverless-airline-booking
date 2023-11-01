@@ -269,7 +269,7 @@ export default {
         if (this.token.error) throw this.token.error
 
         console.log(this.selectedFlight)
-        
+
         await this.$store.dispatch('bookings/createBooking', {
           paymentToken: this.token,
           outboundFlight: this.selectedFlight
@@ -280,7 +280,7 @@ export default {
         //  message: `Your booking is being processed - We'll soon contact you via ${this.customer.email}.`
         //})
         setTimeout(() => {
-        //  this.$q.loading.hide()
+          //  this.$q.loading.hide()
           this.$router.push({ name: 'bookings' })
         }, 3000)
       } catch (err) {
