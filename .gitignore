@@ -82,6 +82,7 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
+.env
 .env.test
 
 # parcel-bundler cache (https://parceljs.org/)
@@ -150,6 +151,7 @@ dist/
 downloads/
 eggs/
 .eggs/
+lib/
 lib64/
 parts/
 sdist/
@@ -257,7 +259,6 @@ dmypy.json
 
 ### VisualStudioCode ###
 .vscode/*
-# !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 
@@ -295,9 +296,6 @@ $RECYCLE.BIN/
 
 ## Custom
 
-# Generated Docs
-html
-
 # Loyalty transpiled JS
 src/backend/loyalty/src/**/*.js
 dist/
@@ -305,18 +303,6 @@ dist/
 # local env files
 .env.local
 .env.*.local
-.dev.env
-.prod.env
-
-# Custom
-TEMPORARY/
-codebuild_build.sh
-packaged.yaml
-*.aws-sam/
-artifacts/
-datasources.json
-test_report/
-src/frontend/graphql
 
 # Cypress videos and screenshots
 src/e2e-tests/ui/**/cypress/videos
@@ -435,6 +421,7 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
+.env
 .env.test
 
 # parcel-bundler cache (https://parceljs.org/)
@@ -475,6 +462,7 @@ dist/
 downloads/
 eggs/
 .eggs/
+lib/
 lib64/
 parts/
 sdist/
@@ -617,17 +605,15 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+
+
 # End of https://www.gitignore.io/api/node,linux,macos,python,windows,visualstudiocode
-amplify/mock-data
 
-
-
-# Quasar/dev
-
-.quasar/
-TODO.md
-
-src/frontend/aws-exports.js
+## Frontend
+src/frontend/graphql
+src/backend
+datasources.json
+.quasar
 
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
@@ -635,7 +621,6 @@ amplify/.config/local-*
 amplify/logs
 amplify/mock-data
 amplify/backend/amplify-meta.json
-amplify/backend/awscloudformation
 amplify/backend/.temp
 build/
 dist/
