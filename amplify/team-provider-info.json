@@ -46,29 +46,5 @@
         }
       }
     }
-  },
-  "airlineenv": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-awsserverlessairline-airlineenv-170152-authRole",
-      "UnauthRoleArn": "arn:aws:iam::068443610608:role/amplify-awsserverlessairline-airlineenv-170152-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::068443610608:role/amplify-awsserverlessairline-airlineenv-170152-authRole",
-      "Region": "eu-west-1",
-      "DeploymentBucketName": "amplify-awsserverlessairline-airlineenv-170152-deployment",
-      "UnauthRoleName": "amplify-awsserverlessairline-airlineenv-170152-unauthRole",
-      "StackName": "amplify-awsserverlessairline-airlineenv-170152",
-      "StackId": "arn:aws:cloudformation:eu-west-1:068443610608:stack/amplify-awsserverlessairline-airlineenv-170152/5af32fa0-78d8-11ee-8686-02142f9bb41b",
-      "AmplifyAppId": "d30gb88nlq59b9"
-    },
-    "categories": {
-      "auth": {
-        "awsserverlessairlineb7722ff6": {}
-      },
-      "hosting": {
-        "amplifyhosting": {
-          "appId": "d30gb88nlq59b9",
-          "type": "manual"
-        }
-      }
-    }
   }
 }
