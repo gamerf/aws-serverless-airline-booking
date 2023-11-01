@@ -1,0 +1,33 @@
+version: 0.1
+backend:
+  phases:
+    preBuild:
+      commands:
+        - npm install -g @aws-amplify/cli@4.13.1 # pinned known working version
+    build:
+      commands:
+        - "# Execute Amplify CLI with the helper script"
+        - amplifyPush --simple
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - cd src
+        - npm install
+    build:
+      commands:
+        ## 
+        # Expose endpoints as a VueJS runtime env
+        ## 
+        - export VUE_APP_PaymentEndpoint=${PAYMENT_ENDPOINT}
+        - export VUE_APP_BookingEndpoint=${BOOKING_ENDPOINT}
+        - export VUE_APP_LoyaltyEndpoint=${LOYALTY_ENDPOINT}
+        - export VUE_APP_CatalogEndpoint=${CATALOG_ENDPOINT}
+        - npm run build
+  artifacts:
+    baseDirectory: src/dist/spa
+    files:
+      - "**/*"
+  cache:
+    paths:
+      - src/node_modules/**/*
